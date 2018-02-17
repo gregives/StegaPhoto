@@ -5,6 +5,12 @@ this.onmessage = function (e) {
   const image = e.data.image
   const password = e.data.password
 
+  // Set compression level.
+  const compression = parseInt(e.data.compression) === 0 ? 'STORE' : 'DEFLATE'
+  const compressionLevel = [...Array(10).keys()].reduce(function (prev, curr) {
+    return (Math.abs(curr - e.data.compression) < Math.abs(prev - e.data.compression) ? curr : prev)
+  })
+
   // Import scripts.
   worker.importScripts('../3rdp/jszip.min.js')
 
@@ -28,8 +34,8 @@ this.onmessage = function (e) {
     // Generate zip file as a Uint8Array.
     zip.generateAsync({
       type: 'uint8array',
-      compression: 'DEFLATE',
-      compressionOptions: { level: 9 }
+      compression: compression,
+      compressionOptions: { level: compressionLevel }
     }).then(function (zipUint) {
       worker.postMessage({
         status: 1

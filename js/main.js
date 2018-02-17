@@ -52,6 +52,7 @@ var fileHandler = (function () {
    */
   function hide () {
     if (window.Worker) {
+      const compression = document.querySelector('#hideCompression').value
       const password = document.querySelector('#hidePasswordConf').value
 
       const hideWorker = new window.Worker('./js/hide.js')
@@ -60,6 +61,7 @@ var fileHandler = (function () {
       hideWorker.postMessage({
         image: hideImage,
         files: hideFiles,
+        compression: compression,
         password: password
       })
 
