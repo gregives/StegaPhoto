@@ -65,9 +65,22 @@ var fileHandler = (function () {
         password: password
       })
 
+      const progressBar = document.querySelector('#progressBar')
+      const progressText = document.querySelector('#progressText')
+      progressText.innerHTML = 'Hiding files inside image.'
+
       // When the web worker send back a result.
       hideWorker.onmessage = function (e) {
-        console.log(e.data.status)
+        progressBar.style.width = e.data.status * 25 + '%'
+        progressBar.setAttribute('aria-valuenow', e.data.status * 25)
+
+        if (e.data.status === 3) {
+          setTimeout(function () {
+            progressText.innerHTML = 'Hide successful!'
+            progressBar.classList.remove('progress-bar-animated')
+            progressBar.classList.add('bg-success')
+          }, 600)
+        }
       }
     }
   }

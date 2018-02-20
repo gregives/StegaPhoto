@@ -14,12 +14,16 @@ this.onmessage = function (e) {
   // Import scripts.
   worker.importScripts('../3rdp/jszip.min.js')
 
+  worker.postMessage({
+    status: 0
+  })
+
   // Read image file as array buffer.
   const reader = new this.FileReader()
   reader.readAsArrayBuffer(image)
   reader.onload = function () {
     worker.postMessage({
-      status: 0
+      status: 1
     })
 
     // Array buffer to Uint8Array.
@@ -38,7 +42,7 @@ this.onmessage = function (e) {
       compressionOptions: { level: compressionLevel }
     }).then(function (zipUint) {
       worker.postMessage({
-        status: 1
+        status: 2
       })
 
       const passwordUint = new worker.TextEncoder().encode(password)
@@ -61,7 +65,7 @@ this.onmessage = function (e) {
           length: 256
         }, false, ['encrypt']).then(function (encKey) {
           worker.postMessage({
-            status: 2
+            status: 3
           })
 
           // Encryption algorithm.
@@ -87,7 +91,7 @@ this.onmessage = function (e) {
             const resultBlob = new worker.Blob([resultUint], { type: `image/${type}` })
 
             worker.postMessage({
-              status: 3,
+              status: 4,
               result: resultBlob
             })
 
