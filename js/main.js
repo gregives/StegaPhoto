@@ -1,10 +1,10 @@
 document.addEventListener('DOMContentLoaded', function (event) {
   // Assign references to labels.
-  const labels = document.getElementsByTagName('label')
-  for (let i = 0; i < labels.length; i++) {
-    if (labels[i].htmlFor !== '') {
-      const elem = document.getElementById(labels[i].htmlFor)
-      if (elem) elem.label = labels[i]
+  const labels = document.querySelectorAll('label')
+  for (let label of labels) {
+    if (label.htmlFor !== '') {
+      const elem = document.getElementById(label.htmlFor)
+      if (elem) elem.label = label
     }
   }
 
@@ -24,9 +24,8 @@ var fileHandler = (function () {
    */
   function printFiles (files, element) {
     let output = []
-    for (let i = 0; i < files.length; i++) {
-      const f = files[i]
-      output.push('<li class="mt-1">', escape(f.name), '<span class="text-muted"> - ', formatBytes(f.size), '</span></li>')
+    for (let file of files) {
+      output.push('<li class="mt-1">', escape(file.name), '<span class="text-muted"> - ', formatBytes(file.size), '</span></li>')
     }
 
     // Add files to output.
@@ -47,8 +46,6 @@ var fileHandler = (function () {
 
   /**
    * Hide the given files within the given image.
-   * @param files - The files to hide.
-   * @param image - The image to hide the files within.
    */
   function hide () {
     if (window.Worker) {
@@ -74,11 +71,56 @@ var fileHandler = (function () {
         progressBar.style.width = e.data.status * 25 + '%'
         progressBar.setAttribute('aria-valuenow', e.data.status * 25)
 
-        if (e.data.status === 3) {
+        if (e.data.status === 4) {
           setTimeout(function () {
             progressText.innerHTML = 'Hide successful!'
             progressBar.classList.remove('progress-bar-animated')
             progressBar.classList.add('bg-success')
+
+            const resultBlob = e.data.result
+
+            const urlCreator = window.URL || window.webkitURL
+            const resultBase64 = urlCreator.createObjectURL(resultBlob)
+
+            const resultOut = document.querySelector('#resultOut')
+
+            resultOut.innerHTML = 'Image containing hidden files:' +
+              '<img id="resultHideOut" class="mt-3">'
+            const resultHideOut = document.querySelector('#resultHideOut')
+            resultHideOut.style.width = '100%'
+            resultHideOut.src = resultBase64
+          }, 600)
+        }
+      }
+    }
+  }
+
+  function reveal () {
+    if (window.Worker) {
+      const password = document.querySelector('#revealPassword').value
+
+      const revealWorker = new window.Worker('./js/reveal.js')
+
+      revealWorker.postMessage({
+        image: revealImage,
+        password: password
+      })
+
+      const progressBar = document.querySelector('#progressBar')
+      const progressText = document.querySelector('#progressText')
+      progressText.innerHTML = 'Revealing files from image.'
+
+      revealWorker.onmessage = function (e) {
+        progressBar.style.width = e.data.status * 25 + '%'
+        progressBar.setAttribute('aria-valuenow', e.data.status * 25)
+
+        if (e.data.status === 4) {
+          setTimeout(function () {
+            progressText.innerHTML = 'Reveal successful!'
+            progressBar.classList.remove('progress-bar-animated')
+            progressBar.classList.add('bg-success')
+
+            console.log(e.data.files)
           }, 600)
         }
       }
@@ -235,6 +277,7 @@ var fileHandler = (function () {
     revealSubmit: function () {
       if (revealImage) {
         window.history.replaceState({}, '', '?reveal')
+        reveal()
       }
     }
   }

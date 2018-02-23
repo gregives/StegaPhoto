@@ -31,8 +31,8 @@ this.onmessage = function (e) {
 
     // Create new zip and add files.
     const zip = new worker.JSZip()
-    for (let i = 0; i < files.length; i++) {
-      zip.file(files[i].name, files[i])
+    for (let file of files) {
+      zip.file(file.name, file)
     }
 
     // Generate zip file as a Uint8Array.
@@ -54,7 +54,7 @@ this.onmessage = function (e) {
         // Derivation algorithm.
         const derAlg = {
           name: 'PBKDF2',
-          salt: worker.crypto.getRandomValues(new Uint8Array(16)),
+          salt: imageUint.slice(0, 16),
           iterations: 1000,
           hash: { name: 'SHA-256' }
         }
