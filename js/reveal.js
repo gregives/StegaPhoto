@@ -8,7 +8,7 @@ this.onmessage = function (e) {
   worker.importScripts('../3rdp/jszip.min.js')
 
   worker.postMessage({
-    status: 0
+    progress: 0
   })
 
   // Read image file as array buffer.
@@ -16,7 +16,7 @@ this.onmessage = function (e) {
   reader.readAsArrayBuffer(image)
   reader.onload = function () {
     worker.postMessage({
-      status: 1
+      progress: 1
     })
 
     const imageUint = new Uint8Array(reader.result)
@@ -36,7 +36,7 @@ this.onmessage = function (e) {
         endOfFile = [59]
     }
 
-    let indexOfZip
+    let indexOfZip = -1
     for (let i = 0; i < imageUint.length; i++) {
       let found = true
       for (let j = 0; j < endOfFile.length; j++) {
@@ -49,6 +49,13 @@ this.onmessage = function (e) {
         indexOfZip = i + endOfFile.length
         break
       }
+    }
+
+    if (indexOfZip === imageUint.length) {
+      worker.postMessage({
+        progress: 1,
+        error: 'Image does not contain files.'
+      })
     }
 
     const encrypted = imageUint.slice(indexOfZip)
@@ -72,7 +79,7 @@ this.onmessage = function (e) {
         length: 256
       }, false, ['decrypt']).then(function (encKey) {
         worker.postMessage({
-          status: 2
+          progress: 2
         })
 
         // Decryption algorithm.
@@ -85,10 +92,11 @@ this.onmessage = function (e) {
         // Decrypt data using new key.
         worker.crypto.subtle.decrypt(encAlg, encKey, encrypted.buffer).then(function (decrypted) {
           worker.postMessage({
-            status: 3
+            progress: 3
           })
 
           const zipUint = new Uint8Array(decrypted)
+          const zipBlob = new worker.Blob([zipUint], { type: `application/zip` })
 
           // New zip to read.
           const zip = new worker.JSZip()
@@ -97,17 +105,23 @@ this.onmessage = function (e) {
           zip.loadAsync(zipUint).then(function (contents) {
             Object.keys(contents.files).forEach(function (filename) {
               zip.files[filename].async('arraybuffer').then(function (content) {
-                files.push([content, filename])
+                files.push(new worker.File([content], filename))
+                // When all files have been read from zip.
                 if (files.length === Object.keys(contents.files).length) {
+                  // Send back files and zip.
                   worker.postMessage({
-                    status: 4,
-                    files: files
+                    progress: 4,
+                    files: files,
+                    zip: zipBlob
                   })
                 }
               })
             })
           }, function () {
-            console.log('Failed to read zip')
+            worker.postMessage({
+              progress: 3,
+              error: 'Incorrect password.'
+            })
           })
         })
       })

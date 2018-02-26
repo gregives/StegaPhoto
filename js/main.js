@@ -1,20 +1,24 @@
-document.addEventListener('DOMContentLoaded', function (event) {
-  // Assign references to labels.
-  const labels = document.querySelectorAll('label')
-  for (let label of labels) {
-    if (label.htmlFor !== '') {
-      const elem = document.getElementById(label.htmlFor)
-      if (elem) elem.label = label
-    }
+// Assign references to labels.
+const labels = document.querySelectorAll('label')
+for (let label of labels) {
+  if (label.htmlFor !== '') {
+    const elem = document.getElementById(label.htmlFor)
+    if (elem) elem.label = label
   }
+}
 
-  // Check if browser supports web workers.
-  if (!window.Worker) {
-    document.querySelector('#webWorkerAlert').classList.remove('d-none')
-  }
+// Check if browser supports web workers.
+if (!window.Worker) {
+  document.querySelector('#webWorkerAlert').classList.remove('d-none')
+}
+
+document.querySelector('#hideCompression').addEventListener('change', function () {
+  this.value = this.value > 9 ? 9 : this.value
+  this.value = this.value < 0 ? 0 : this.value
 })
 
-var fileHandler = (function () {
+let calculated = false
+const fileHandler = (function () {
   let hideFiles
   let hideImage
   let revealImage
@@ -48,13 +52,16 @@ var fileHandler = (function () {
    * Hide the given files within the given image.
    */
   function hide () {
+    document.querySelector('#weHaveLiftOff').removeEventListener('click', hide)
+
     if (window.Worker) {
+      calculated = true
       const compression = document.querySelector('#hideCompression').value
       const password = document.querySelector('#hidePasswordConf').value
 
       const hideWorker = new window.Worker('./js/hide.js')
 
-      // Start a web worker.
+      // Send information to web worker.
       hideWorker.postMessage({
         image: hideImage,
         files: hideFiles,
@@ -62,16 +69,34 @@ var fileHandler = (function () {
         password: password
       })
 
+      // Reset progress bar.
       const progressBar = document.querySelector('#progressBar')
+      progressBar.classList.remove('bg-success', 'bg-danger')
+      progressBar.classList.add('progress-bar-animated', 'bg-primary')
+      progressBar.style.width = 0
+      progressBar.setAttribute('aria-valuenow', 0)
+
+      // Starting to hide files.
       const progressText = document.querySelector('#progressText')
       progressText.innerHTML = 'Hiding files inside image.'
 
-      // When the web worker send back a result.
-      hideWorker.onmessage = function (e) {
-        progressBar.style.width = e.data.status * 25 + '%'
-        progressBar.setAttribute('aria-valuenow', e.data.status * 25)
+      // Reset output.
+      const resultOut = document.querySelector('#resultOut')
+      resultOut.innerHTML = ''
+      const filesOut = document.querySelector('#filesOut')
+      filesOut.innerHTML = ''
+      const download = document.querySelector('#download')
+      download.classList.add('d-none')
+      download.href = '#'
 
-        if (e.data.status === 4) {
+      // When the web worker sends back a result.
+      hideWorker.onmessage = function (e) {
+        // Update progress.
+        progressBar.style.width = e.data.progress * 25 + '%'
+        progressBar.setAttribute('aria-valuenow', e.data.progress * 25)
+
+        if (e.data.progress === 4) {
+          // If the web worker was successful.
           setTimeout(function () {
             progressText.innerHTML = 'Hide successful!'
             progressBar.classList.remove('progress-bar-animated')
@@ -79,49 +104,106 @@ var fileHandler = (function () {
 
             const resultBlob = e.data.result
 
+            // Create URL of result.
             const urlCreator = window.URL || window.webkitURL
-            const resultBase64 = urlCreator.createObjectURL(resultBlob)
+            const resultURL = urlCreator.createObjectURL(resultBlob)
 
             const resultOut = document.querySelector('#resultOut')
+            resultOut.innerHTML = 'Image containing hidden files:'
 
-            resultOut.innerHTML = 'Image containing hidden files:' +
-              '<img id="resultHideOut" class="mt-3">'
-            const resultHideOut = document.querySelector('#resultHideOut')
-            resultHideOut.style.width = '100%'
-            resultHideOut.src = resultBase64
+            // Print file output.
+            const fileName = resultURL.split('/').slice(-1)[0]
+            const fileType = hideImage.type.slice(6)
+            const filesOut = document.querySelector('#filesOut')
+            printFiles([new window.File([resultBlob], fileName + '.' + fileType)], filesOut)
+
+            // Download button.
+            const download = document.querySelector('#download')
+            download.classList.remove('d-none')
+            download.innerHTML = 'Download Image'
+            download.href = resultURL
           }, 600)
+        } else if (e.data.error) {
+          // If there was an error, print error.
+          calculated = false
+          progressText.innerHTML = e.data.error
+          progressBar.classList.remove('progress-bar-animated')
+          progressBar.classList.add('bg-danger')
         }
       }
     }
   }
 
   function reveal () {
+    document.querySelector('#weHaveLiftOff').removeEventListener('click', hide)
+
     if (window.Worker) {
+      calculated = true
       const password = document.querySelector('#revealPassword').value
 
       const revealWorker = new window.Worker('./js/reveal.js')
 
+      // Send information to web worker.
       revealWorker.postMessage({
         image: revealImage,
         password: password
       })
 
+      // Reset progress bar.
       const progressBar = document.querySelector('#progressBar')
+      progressBar.classList.remove('bg-success', 'bg-danger')
+      progressBar.classList.add('progress-bar-animated', 'bg-primary')
+      progressBar.style.width = 0
+      progressBar.setAttribute('aria-valuenow', 0)
+
+      // Starting to hide files.
       const progressText = document.querySelector('#progressText')
       progressText.innerHTML = 'Revealing files from image.'
 
-      revealWorker.onmessage = function (e) {
-        progressBar.style.width = e.data.status * 25 + '%'
-        progressBar.setAttribute('aria-valuenow', e.data.status * 25)
+      // Reset output.
+      const resultOut = document.querySelector('#resultOut')
+      resultOut.innerHTML = ''
+      const filesOut = document.querySelector('#filesOut')
+      filesOut.innerHTML = ''
+      const download = document.querySelector('#download')
+      download.classList.add('d-none')
+      download.href = '#'
 
-        if (e.data.status === 4) {
+      // When the web worker sends back a result.
+      revealWorker.onmessage = function (e) {
+        // Update progress.
+        progressBar.style.width = e.data.progress * 25 + '%'
+        progressBar.setAttribute('aria-valuenow', e.data.progress * 25)
+
+        if (e.data.progress === 4) {
+          // If the web worker was successful.
           setTimeout(function () {
             progressText.innerHTML = 'Reveal successful!'
             progressBar.classList.remove('progress-bar-animated')
             progressBar.classList.add('bg-success')
 
-            console.log(e.data.files)
+            const files = e.data.files
+            const zipBlob = e.data.zip
+
+            // Create URL of result.
+            const urlCreator = window.URL || window.webkitURL
+            const resultURL = urlCreator.createObjectURL(zipBlob)
+
+            // Print file output.
+            resultOut.innerHTML = 'Revealed files:'
+            printFiles(files, filesOut)
+
+            // Download button.
+            download.classList.remove('d-none')
+            download.innerHTML = 'Download ZIP'
+            download.href = resultURL
           }, 600)
+        } else if (e.data.error) {
+          // If there was an error, print error.
+          calculated = false
+          progressText.innerHTML = e.data.error
+          progressBar.classList.remove('progress-bar-animated')
+          progressBar.classList.add('bg-danger')
         }
       }
     }
@@ -264,20 +346,34 @@ var fileHandler = (function () {
     /**
      * Hide files.
      */
-    hideSubmit: function () {
+    hideSubmit: function (e) {
+      e.preventDefault()
       if (hideFiles && hideImage && validateHidePassword()) {
-        window.history.replaceState({}, '', '?hide')
-        hide()
+        if (calculated) {
+          // Confirm previous files will be overridden.
+          window.$('#confirmModal').modal()
+          document.querySelector('#confirmModalTitle').innerHTML = 'Hide files within image'
+          document.querySelector('#weHaveLiftOff').addEventListener('click', hide)
+        } else {
+          hide()
+        }
       }
     },
 
     /**
      * Reveal files.
      */
-    revealSubmit: function () {
+    revealSubmit: function (e) {
+      e.preventDefault()
       if (revealImage) {
-        window.history.replaceState({}, '', '?reveal')
-        reveal()
+        if (calculated) {
+          // Confirm previous files will be overridden.
+          window.$('#confirmModal').modal()
+          document.querySelector('#confirmModalTitle').innerHTML = 'Reveal files from image'
+          document.querySelector('#weHaveLiftOff').addEventListener('click', reveal)
+        } else {
+          reveal()
+        }
       }
     }
   }
@@ -312,7 +408,7 @@ document.querySelector('#revealImage').addEventListener('change', fileHandler.ha
 document.querySelector('#hidePasswordConf').addEventListener('change', validateHidePassword)
 
 // When hide button is clicked.
-document.querySelector('#hideSubmit').addEventListener('click', fileHandler.hideSubmit)
+document.querySelector('#hide form').addEventListener('submit', fileHandler.hideSubmit)
 
 // When reveal button is clicked.
-document.querySelector('#revealSubmit').addEventListener('click', fileHandler.revealSubmit)
+document.querySelector('#reveal form').addEventListener('submit', fileHandler.revealSubmit)
