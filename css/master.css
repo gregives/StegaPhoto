@@ -13,3 +13,7 @@ body {
 .flex-grow {
   flex: 1;
 }
+
+.quote {
+  border-left: solid #EBEBEB 4px;
+}
