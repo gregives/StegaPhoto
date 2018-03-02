@@ -16,6 +16,8 @@
 
     2.2. [Revealing the Files](#22-revealing-the-files)
 
+3. [License](#3-license)
+
 ## 1. Preliminary Research
 
 #### 1.1. What Is Steganography?
@@ -87,3 +89,7 @@ Revealing the files is a similar process to hiding, albeit in reverse:
   4. After the ZIP has been decrypted, the files can then be extracted using the JSZip library - these should be exactly the same as the original files, bit-for-bit.
 
   5. Although the files have been extracted from the ZIP, for ease it is the ZIP which is offered to the end user to download.
+
+## 3. License
+
+This project is licensed under the GPLv3 License. See the [LICENSE](./LICENSE) file for details.
