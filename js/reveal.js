@@ -24,6 +24,7 @@ this.onmessage = function (e) {
     // Get type of image.
     const type = image.type.slice(6)
 
+    // Set EOF markers.
     let endOfFile
     switch (type) {
       case 'png':
@@ -36,6 +37,7 @@ this.onmessage = function (e) {
         endOfFile = [59]
     }
 
+    // Find EOF marker and hence index of ZIP.
     let indexOfZip = -1
     for (let i = 0; i < imageUint.length; i++) {
       let found = true
@@ -51,6 +53,7 @@ this.onmessage = function (e) {
       }
     }
 
+    // If there is no content after the EOF.
     if (indexOfZip === imageUint.length) {
       worker.postMessage({
         progress: 1,
@@ -73,7 +76,7 @@ this.onmessage = function (e) {
         hash: { name: 'SHA-256' }
       }
 
-      // Derive new key from PBKDF2 key.
+      // Derive new key using PBKDF2.
       worker.crypto.subtle.deriveKey(derAlg, derKey, {
         name: 'AES-CTR',
         length: 256

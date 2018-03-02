@@ -134,6 +134,9 @@ const fileHandler = (function () {
     }
   }
 
+  /**
+   * Reveal the files within the given image.
+   */
   function reveal () {
     document.querySelector('#weHaveLiftOff').removeEventListener('click', hide)
 

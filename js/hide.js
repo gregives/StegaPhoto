@@ -59,7 +59,7 @@ this.onmessage = function (e) {
           hash: { name: 'SHA-256' }
         }
 
-        // Derive new key from PBKDF2 key.
+        // Derive new key using PBKDF2.
         worker.crypto.subtle.deriveKey(derAlg, derKey, {
           name: 'AES-CTR',
           length: 256
