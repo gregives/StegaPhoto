@@ -12,7 +12,7 @@ this.onmessage = function (e) {
   })
 
   // Import scripts.
-  worker.importScripts('../3rdp/jszip.min.js')
+  worker.importScripts('../vendor/jszip.min.js')
 
   worker.postMessage({
     progress: 0
