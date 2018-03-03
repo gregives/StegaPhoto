@@ -1,5 +1,7 @@
 # StegaPhoto
 
+<http://gregives.co.uk/stegaphoto/>
+
 **StegaPhoto** is a simple website created to hide files within images, a form of *steganography*. It is built in vanilla JavaScript using SubtleCrypto, Web Workers, JSZip and Bootstrap. **StegaPhoto does not send data to a server** - the website only uses **client-side JavaScript**. The process of the project is outlined below.
 
 1. [Preliminary Research](#1-preliminary-research)
