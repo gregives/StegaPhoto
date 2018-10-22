@@ -1,4 +1,5 @@
-import JSZip from 'jszip';
+/* eslint-env worker */
+import JSZip from 'jszip'
 
 onmessage = function (e) {
   const worker = this

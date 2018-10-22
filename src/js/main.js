@@ -1,3 +1,7 @@
+import 'bootstrap/js/dist/tab'
+import 'bootstrap/js/dist/util'
+import 'bootstrap/js/dist/button'
+
 import HideWorker from './hide.worker.js'
 import RevealWorker from './reveal.worker.js'
 
@@ -29,7 +33,7 @@ $(document).ready(() => {
     /**
      * Print uploaded files to output.
      */
-    function printFiles(files, element) {
+    function printFiles (files, element) {
       let output = []
       for (let file of files) {
         output.push('<li class="mt-1">', escape(file.name), '<span class="text-muted"> - ', formatBytes(file.size), '</span></li>')
@@ -42,7 +46,7 @@ $(document).ready(() => {
     /**
      * Format file size into appropriate unit.
      */
-    function formatBytes(bytes) {
+    function formatBytes (bytes) {
       if (bytes === 0) return '0 Bytes'
       const k = 1024
       const dm = 2
@@ -60,7 +64,7 @@ $(document).ready(() => {
     /**
      * Hide the given files within the given image.
      */
-    function hide() {
+    function hide () {
       document.querySelector('#weHaveLiftOff').removeEventListener('click', hide)
 
       if (window.Worker) {
@@ -146,7 +150,7 @@ $(document).ready(() => {
     /**
      * Reveal the files within the given image.
      */
-    function reveal() {
+    function reveal () {
       document.querySelector('#weHaveLiftOff').removeEventListener('click', hide)
 
       if (window.Worker) {
@@ -363,7 +367,7 @@ $(document).ready(() => {
         if (hideFiles && hideImage && validateHidePassword()) {
           if (calculated) {
             // Confirm previous files will be overridden.
-            window.$('#confirmModal').modal()
+            $('#confirmModal').modal()
             document.querySelector('#confirmModalTitle').innerHTML = 'Hide files within image'
             document.querySelector('#weHaveLiftOff').addEventListener('click', hide)
           } else {
@@ -380,7 +384,7 @@ $(document).ready(() => {
         if (revealImage) {
           if (calculated) {
             // Confirm previous files will be overridden.
-            window.$('#confirmModal').modal()
+            $('#confirmModal').modal()
             document.querySelector('#confirmModalTitle').innerHTML = 'Reveal files from image'
             document.querySelector('#weHaveLiftOff').addEventListener('click', reveal)
           } else {
@@ -394,7 +398,7 @@ $(document).ready(() => {
   /**
    * Check password field and confirm password are the same.
    */
-  function validateHidePassword() {
+  function validateHidePassword () {
     const hidePasswordConf = document.querySelector('#hidePasswordConf')
     if (hidePasswordConf.value === document.querySelector('#hidePassword').value) {
       hidePasswordConf.classList.remove('is-invalid')
@@ -407,21 +411,21 @@ $(document).ready(() => {
     }
   }
 
-// Add event handler for hide files input.
+  // Add event handler for hide files input.
   document.querySelector('#hideFiles').addEventListener('change', fileHandler.handleHideFiles, false)
 
-// Add event handler for hide image input.
+  // Add event handler for hide image input.
   document.querySelector('#hideImage').addEventListener('change', fileHandler.handleHideImage, false)
 
-// Add event handler for reveal image input.
+  // Add event handler for reveal image input.
   document.querySelector('#revealImage').addEventListener('change', fileHandler.handleRevealImage, false)
 
-// Add event handler for password confirmation.
+  // Add event handler for password confirmation.
   document.querySelector('#hidePasswordConf').addEventListener('change', validateHidePassword)
 
-// When hide button is clicked.
+  // When hide button is clicked.
   document.querySelector('#hide form').addEventListener('submit', fileHandler.hideSubmit)
 
-// When reveal button is clicked.
+  // When reveal button is clicked.
   document.querySelector('#reveal form').addEventListener('submit', fileHandler.revealSubmit)
 })
