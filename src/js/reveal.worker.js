@@ -1,18 +1,17 @@
-this.onmessage = function (e) {
+import JSZip from 'jszip';
+
+onmessage = function (e) {
   const worker = this
 
   const image = e.data.image
   const password = e.data.password
-
-  // Import scripts.
-  worker.importScripts('../vendor/jszip.min.js')
 
   worker.postMessage({
     progress: 0
   })
 
   // Read image file as array buffer.
-  const reader = new this.FileReader()
+  const reader = new FileReader()
   reader.readAsArrayBuffer(image)
   reader.onload = function () {
     worker.postMessage({
@@ -102,7 +101,7 @@ this.onmessage = function (e) {
           const zipBlob = new worker.Blob([zipUint], { type: `application/zip` })
 
           // New zip to read.
-          const zip = new worker.JSZip()
+          const zip = new JSZip()
 
           let files = []
           zip.loadAsync(zipUint).then(function (contents) {

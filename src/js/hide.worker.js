@@ -1,4 +1,6 @@
-this.onmessage = function (e) {
+import JSZip from 'jszip';
+
+onmessage = function (e) {
   const worker = this
 
   const files = e.data.files
@@ -11,15 +13,12 @@ this.onmessage = function (e) {
     return (Math.abs(curr - e.data.compression) < Math.abs(prev - e.data.compression) ? curr : prev)
   })
 
-  // Import scripts.
-  worker.importScripts('../vendor/jszip.min.js')
-
   worker.postMessage({
     progress: 0
   })
 
   // Read image file as array buffer.
-  const reader = new this.FileReader()
+  const reader = new FileReader()
   reader.readAsArrayBuffer(image)
   reader.onload = function () {
     worker.postMessage({
@@ -30,7 +29,7 @@ this.onmessage = function (e) {
     const imageUint = new Uint8Array(reader.result)
 
     // Create new zip and add files.
-    const zip = new worker.JSZip()
+    const zip = new JSZip()
     for (let file of files) {
       zip.file(file.name, file)
     }
