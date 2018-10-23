@@ -30,7 +30,9 @@
   "devDependencies": {
     "@babel/cli": "^7.1.2",
     "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
     "@babel/preset-env": "^7.1.0",
+    "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.4",
     "html-webpack-plugin": "^3.2.0",
     "script-ext-html-webpack-plugin": "^2.0.1",
@@ -47,6 +49,10 @@
     "popper.js": "^1.14.4"
   },
   "standard": {
-    "globals": [ "$", "FileReader" ]
+    "parser": "babel-eslint",
+    "globals": [
+      "$",
+      "FileReader"
+    ]
   }
 }

@@ -12,7 +12,7 @@ onmessage = function (e) {
   const compression = parseInt(e.data.compression) === 0 ? 'STORE' : 'DEFLATE'
   const compressionLevel = [...Array(10).keys()].reduce(function (prev, curr) {
     return (Math.abs(curr - e.data.compression) < Math.abs(prev - e.data.compression) ? curr : prev)
-  })
+  }, 0)
 
   worker.postMessage({
     progress: 0
