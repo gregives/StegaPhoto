@@ -1,12 +1,7 @@
-import Head from 'next/head'
+import Layout from '../components/layout'
 
 export default function Home() {
-  return <div className="bg-red-500">
-    <Head>
-      <title>StegaPhoto</title>
-      <link rel="icon" href="/favicon.ico" />
-    </Head>
-
-    <main>Hello world!</main>
-  </div>
+  return <Layout>
+    Hello, world!
+  </Layout>
 }
