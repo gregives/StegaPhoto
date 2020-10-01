@@ -1,7 +1,8 @@
-import Layout from '../components/layout'
+import Banner from '../components/banner'
+import Page from '../components/page'
 
 export default function Home() {
-  return <Layout>
-    Hello, world!
-  </Layout>
+  return <Page>
+    <Banner />
+  </Page>
 }

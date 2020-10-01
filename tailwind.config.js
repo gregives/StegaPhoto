@@ -6,5 +6,10 @@ module.exports = {
     purge: [
         './components/**/*.js',
         './pages/**/*.js',
-    ]
+    ],
+    theme: {
+        fontFamily: {
+            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif']
+        }
+    }
 }
