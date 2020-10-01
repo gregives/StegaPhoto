@@ -12,6 +12,7 @@ const Page = (props) => (
             <noscript>
                 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter&display=swap" />
             </noscript>
+            <meta name="description">Hide files inside images easily using StegaPhoto, using in-browser steganography techniques.</meta>
         </Head>
         {props.children}
     </div>
