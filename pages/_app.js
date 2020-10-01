@@ -1,7 +1,7 @@
 import '../styles/tailwind.css'
 
-function StegaPhoto({ Component, pageProps }) {
-  return <Component {...pageProps} />
-}
+const StegaPhoto = ({ Component, pageProps }) => (
+  <Component {...pageProps} />
+)
 
 export default StegaPhoto
