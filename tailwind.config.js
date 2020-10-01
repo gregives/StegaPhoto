@@ -11,5 +11,9 @@ module.exports = {
         fontFamily: {
             sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif']
         }
+    },
+    variants: {
+        backgroundColor: ({ after }) => after(['checked']),
+        boxShadow: ({ after}) => after(['focus-visible'], 'focus')
     }
 }
