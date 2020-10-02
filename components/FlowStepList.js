@@ -1,5 +1,5 @@
 const FlowStepList = (props) => (
-    <ol>
+    <ol className="flex flex-col gap-32">
         {props.children}
     </ol>
 )
