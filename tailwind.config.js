@@ -3,17 +3,23 @@ module.exports = {
         removeDeprecatedGapUtilities: true,
         purgeLayersByDefault: true,
     },
-    purge: [
-        './components/**/*.js',
-        './pages/**/*.js',
-    ],
+    purge: ["./components/**/*.js", "./pages/**/*.js"],
     theme: {
         fontFamily: {
-            sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', 'sans-serif']
-        }
+            sans: [
+                "Inter",
+                "-apple-system",
+                "BlinkMacSystemFont",
+                "Segoe UI",
+                "Roboto",
+                "Helvetica",
+                "Arial",
+                "sans-serif",
+            ],
+        },
     },
     variants: {
-        backgroundColor: ({ after }) => after(['checked']),
-        boxShadow: ({ after}) => after(['focus-visible'], 'focus')
-    }
-}
+        backgroundColor: ({ after }) => after(["checked"]),
+        boxShadow: ({ after }) => after(["focus-visible"], "focus"),
+    },
+};

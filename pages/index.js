@@ -1,7 +1,7 @@
-import Banner from '../components/Banner'
-import Flow from '../components/Flow'
-import Footer from '../components/Footer'
-import Page from '../components/Page'
+import Banner from "../components/Banner";
+import Flow from "../components/Flow";
+import Footer from "../components/Footer";
+import Page from "../components/Page";
 
 const Home = () => (
     <Page>
@@ -11,6 +11,6 @@ const Home = () => (
         </div>
         <Footer />
     </Page>
-)
+);
 
-export default Home
+export default Home;
