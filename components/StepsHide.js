@@ -1,11 +1,11 @@
 import FlowStep from "./FlowStep";
-import FormFile from "./FormFile";
+import FormFiles from "./FormFiles";
 
 const StepsHide = () => (
     <>
         <FlowStep>
             <p className="mb-8">Upload the files you would like to hide</p>
-            <FormFile id="hideFiles" name="hideFiles" multiple />
+            <FormFiles id="hideFiles" name="hideFiles" multiple />
         </FlowStep>
         <FlowStep>Second hide step</FlowStep>
     </>

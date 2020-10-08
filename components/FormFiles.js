@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 
-const FormFile = (props) => {
+const FormFiles = (props) => {
     const [files, setFiles] = useState([]);
     const fileInput = useRef(null);
 
@@ -51,7 +51,6 @@ const FormFile = (props) => {
                             )
                         )
                     }
-                    multiple={props.multiple}
                     hidden
                     ref={fileInput}
                 />
@@ -67,13 +66,11 @@ const FormFile = (props) => {
                             +
                         </span>
                     </button>
-                    <span className="w-full truncate">
-                        {props.multiple ? "Add files" : "Add file"}
-                    </span>
+                    <span className="w-full truncate">Add files</span>
                 </label>
             </li>
         </ul>
     );
 };
 
-export default FormFile;
+export default FormFiles;
