@@ -7,7 +7,12 @@ const StepsHide = () => (
             <p className="mb-8">
                 Add the image you want to hide the files inside
             </p>
-            <FormFiles id="hideImage" name="hideImage" label="Add image" />
+            <FormFiles
+                id="hideImage"
+                name="hideImage"
+                label="Add image"
+                accept="image/*"
+            />
         </FlowStep>
         <FlowStep>
             <p className="mb-8">Add the files you would like to hide</p>

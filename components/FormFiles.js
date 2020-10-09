@@ -47,6 +47,7 @@ const FormFiles = (props) => {
                 >
                     <input
                         type="file"
+                        accept={props.accept || undefined}
                         id={props.id}
                         name={props.name}
                         onChange={(event) =>
