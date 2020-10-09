@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import pretty from "pretty-bytes";
 
 const FormFiles = (props) => {
     const [files, setFiles] = useState([]);
@@ -17,58 +18,62 @@ const FormFiles = (props) => {
     };
 
     return (
-        <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-8 bg-gray-900 bg-opacity-25 shadow-inner py-8 overflow-y-auto -mx-8 sm:-mx-4 sm:rounded-lg">
+        <ul className="grid grid-cols-1 md:grid-cols-2 gap-8 bg-gray-900 bg-opacity-25 shadow-inner p-8 -mx-8 sm:-mx-4 sm:rounded-lg">
             {files.map((file, index) => (
                 <li
                     key={index}
-                    className="flex flex-col place-items-center text-center text-sm p-2"
+                    className="relative flex flex-row items-center text-base md:text-lg bg-gray-700 shadow rounded"
                 >
-                    <span className="relative py-8 px-10 mb-4 w-1/3 bg-blue-700 bg-opacity-25 overflow-hidden rounded not-italic">
-                        <button
-                            className="absolute top-0 right-0 px-2 -mt-2 text-3xl rounded-bl-lg focus:outline-none focus-visible:shadow-outline hover:bg-blue-500 hover:bg-opacity-25 text-gray-500 hover:text-gray-100"
-                            onClick={() =>
-                                setFiles(
-                                    files.filter((_file, i) => i !== index)
-                                )
-                            }
-                        >
-                            &times;
-                        </button>
+                    <span className="flex-grow py-2 px-4 truncate">
+                        {file.name}
                     </span>
-                    <span className="w-full truncate">{file.name}</span>
+                    <span className="flex-shrink whitespace-no-wrap py-2 px-4 text-gray-500">
+                        {pretty(file.size)}
+                    </span>
+                    <button
+                        className="px-3 text-3xl bg-gray-800 bg-opacity-25 hover:bg-opacity-50 focus:outline-none focus-visible:shadow-outline rounded-r"
+                        onClick={() =>
+                            setFiles(files.filter((_, i) => i !== index))
+                        }
+                    >
+                        &times;
+                    </button>
                 </li>
             ))}
-            <li>
-                <input
-                    type="file"
-                    id={props.id}
-                    name={props.name}
-                    onChange={(event) =>
-                        setFiles(
-                            [...files, ...event.target.files].reduce(
-                                uniqueFiles,
-                                []
-                            )
-                        )
-                    }
-                    hidden
-                    ref={fileInput}
-                />
-                <label
-                    htmlFor={props.id}
-                    className="flex flex-col place-items-center text-center text-sm p-2"
+            {(files.length === 0 || props.multiple) && (
+                <li
+                    key={files.length + 1}
+                    className="relative flex flex-row items-center text-base md:text-lg bg-gray-700 shadow rounded"
                 >
+                    <input
+                        type="file"
+                        id={props.id}
+                        name={props.name}
+                        onChange={(event) =>
+                            setFiles(
+                                [...files, ...event.target.files].reduce(
+                                    uniqueFiles,
+                                    []
+                                )
+                            )
+                        }
+                        multiple={props.multiple}
+                        hidden
+                        ref={fileInput}
+                    />
+                    <span className="flex-grow py-2 px-4 truncate">
+                        {props.label || "Add file"}
+                        {props.multiple && "s"}
+                    </span>
                     <button
-                        className="relative py-8 px-10 mb-4 w-1/3 focus:outline-none focus-visible:shadow-outline bg-blue-700 hover:bg-blue-500 bg-opacity-25 hover:bg-opacity-25 rounded cursor-pointer"
+                        className="px-3 text-3xl bg-gray-800 bg-opacity-25 hover:bg-opacity-50 focus:outline-none focus-visible:shadow-outline rounded-r"
                         onClick={() => fileInput.current.click()}
                     >
-                        <span className="absolute inset-0 h-full w-full text-4xl text-gray-500 hover:text-gray-100 focus:text-gray-100">
-                            +
-                        </span>
+                        +
+                        <span className="absolute w-full h-full inset-0"></span>
                     </button>
-                    <span className="w-full truncate">Add files</span>
-                </label>
-            </li>
+                </li>
+            )}
         </ul>
     );
 };
