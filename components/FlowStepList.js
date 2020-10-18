@@ -1,5 +1,5 @@
 const FlowStepList = ({ children }) => (
-    <ol className="flex flex-col gap-32">{children}</ol>
+    <ol className="grid gap-32">{children}</ol>
 );
 
 export default FlowStepList;
