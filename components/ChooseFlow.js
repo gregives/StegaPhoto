@@ -5,13 +5,15 @@ const ChooseFlow = ({ onChoice }) => (
         <p className="mb-4">I would like to</p>
         <FormRadio
             name="chooseFlow"
+            value="hide"
             label="hide files inside an image"
-            onChange={() => onChoice("hide")}
+            onChange={onChoice}
         />
         <FormRadio
             name="chooseFlow"
+            value="show"
             label="retrieve files from an image"
-            onChange={() => onChoice("show")}
+            onChange={onChoice}
         />
     </div>
 );
