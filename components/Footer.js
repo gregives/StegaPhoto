@@ -7,7 +7,7 @@ const Footer = () => (
                     href="https://gregives.co.uk/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-orange-400"
+                    className="text-orange-400 focus:outline-none hover:underline focus:underline"
                 >
                     Greg Ives
                 </a>
