@@ -16,7 +16,7 @@ const FormRange = ({ min, max, step, value, onChange }) => {
                 value={value}
                 onChange={(event) => onChange(Number(event.target.value))}
             />
-            <div className="flex justify-between text-base mt-4 -mx-1">
+            <div className="flex justify-between text-base cursor-default mt-4 -mx-1">
                 {range.map((number) => (
                     <span
                         key={number}
@@ -25,6 +25,7 @@ const FormRange = ({ min, max, step, value, onChange }) => {
                                 ? "text-gray-100 text-center w-5"
                                 : "text-gray-500 text-center w-5"
                         }
+                        onClick={() => onChange(number)}
                     >
                         {number}
                     </span>
