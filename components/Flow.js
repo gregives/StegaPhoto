@@ -5,7 +5,7 @@ import FlowStepList from "./FlowStepList";
 import StepsHide from "./StepsHide";
 import StepsShow from "./StepsShow";
 
-const Flow = (props) => {
+const Flow = () => {
     const [flow, setFlow] = useState(null);
 
     const chosenFlowSteps = (() => {

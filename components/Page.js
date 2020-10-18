@@ -1,6 +1,6 @@
 import Head from "next/head";
 
-const Page = (props) => (
+const Page = ({ children }) => (
     <div className="min-h-screen flex flex-col justify-between bg-gray-800 text-gray-100 text-xl lg:text-2xl">
         <Head>
             <meta charSet="utf-8" />
@@ -54,7 +54,7 @@ const Page = (props) => (
             />
             <link rel="manifest" href="/site.webmanifest" />
         </Head>
-        {props.children}
+        {children}
     </div>
 );
 

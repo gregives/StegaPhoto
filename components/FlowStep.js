@@ -1,3 +1,3 @@
-const FlowStep = (props) => <li>{props.children}</li>;
+const FlowStep = ({ children }) => <li>{children}</li>;
 
 export default FlowStep;

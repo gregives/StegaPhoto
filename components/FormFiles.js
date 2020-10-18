@@ -1,8 +1,7 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import pretty from "pretty-bytes";
 
-const FormFiles = (props) => {
-    const [files, setFiles] = useState([]);
+const FormFiles = ({ id, name, label, multiple, accept, files, setFiles }) => {
     const fileInput = useRef(null);
 
     const uniqueFiles = (uniqueFiles, file) => {
@@ -40,16 +39,16 @@ const FormFiles = (props) => {
                     </button>
                 </li>
             ))}
-            {(files.length === 0 || props.multiple) && (
+            {(files.length === 0 || multiple) && (
                 <li
                     key={files.length + 1}
                     className="relative flex flex-row items-center text-base md:text-lg bg-gray-700 shadow rounded"
                 >
                     <input
                         type="file"
-                        accept={props.accept || undefined}
-                        id={props.id}
-                        name={props.name}
+                        accept={accept || undefined}
+                        id={id}
+                        name={name}
                         onChange={(event) =>
                             setFiles(
                                 [...files, ...event.target.files].reduce(
@@ -58,13 +57,13 @@ const FormFiles = (props) => {
                                 )
                             )
                         }
-                        multiple={props.multiple}
+                        multiple={multiple}
                         hidden
                         ref={fileInput}
                     />
                     <span className="flex-grow py-2 px-4 truncate">
-                        {props.label || "Add file"}
-                        {props.multiple && "s"}
+                        {label || "Add file"}
+                        {multiple && "s"}
                     </span>
                     <button
                         className="px-3 text-3xl bg-gray-800 bg-opacity-25 hover:bg-opacity-50 focus:outline-none focus-visible:shadow-outline rounded-r"

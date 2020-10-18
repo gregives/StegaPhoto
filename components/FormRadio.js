@@ -1,14 +1,14 @@
-const FormRadio = (props) => (
+const FormRadio = ({ id, name, label, onChange }) => (
     <>
         <input
             type="radio"
-            id={props.id}
-            name={props.name}
+            id={id}
+            name={name}
             className="appearance-none focus:outline-none focus-visible:shadow-outline rounded-full border-2 border-current p-3 checked:bg-orange-500"
-            onChange={(event) => props.onChange(event)}
+            onChange={(event) => onChange(event)}
         />
-        <label htmlFor={props.id} className="pl-4">
-            {props.label}
+        <label htmlFor={id} className="pl-4">
+            {label}
         </label>
     </>
 );
