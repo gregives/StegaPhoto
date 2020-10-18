@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import FlowStep from "./FlowStep";
 import FormFiles from "./FormFiles";
+import FormRange from "./FormRange";
 
 const StepsHide = () => {
     const [image, setImage] = useState([]);
     const [files, setFiles] = useState([]);
+    const [compression, setCompression] = useState(9);
 
     return (
         <>
@@ -29,6 +31,16 @@ const StepsHide = () => {
                     multiple
                     files={files}
                     setFiles={setFiles}
+                />
+            </FlowStep>
+            <FlowStep>
+                <p className="mb-8">Choose the compression level</p>
+                <FormRange
+                    min={0}
+                    max={9}
+                    step={1}
+                    value={compression}
+                    onChange={setCompression}
                 />
             </FlowStep>
         </>
