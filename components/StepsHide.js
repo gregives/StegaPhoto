@@ -4,6 +4,7 @@ import FormFiles from "./FormFiles";
 import FormRange from "./FormRange";
 import FormPassword from "./FormPassword";
 import ProgressButton from "./ProgressButton";
+import HideWorker from "../workers/hide.worker";
 
 const StepsHide = () => {
     const [image, setImage] = useState([]);
@@ -11,8 +12,24 @@ const StepsHide = () => {
     const [compression, setCompression] = useState(9);
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [progress, setProgress] = useState(0);
+    const [result, setResult] = useState(null);
 
-    const validPassword = password === confirmPassword;
+    const hideFiles = () => {
+        const worker = new HideWorker();
+
+        worker.onmessage = ({ data: { progress, result } }) => {
+            setProgress(progress);
+            setResult(result);
+        };
+
+        worker.postMessage({
+            image,
+            files,
+            compression,
+            password,
+        });
+    };
 
     return (
         <>
@@ -59,10 +76,10 @@ const StepsHide = () => {
                     confirm={confirmPassword}
                     onChange={setPassword}
                     onConfirm={setConfirmPassword}
-                    valid={validPassword}
+                    valid={password === confirmPassword}
                 />
             </FlowStep>
-            <ProgressButton progress={0}>
+            <ProgressButton onClick={hideFiles} progress={progress}>
                 Hide files inside image
             </ProgressButton>
         </>
