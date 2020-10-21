@@ -31,6 +31,7 @@ const FormFiles = ({ id, name, label, multiple, accept, files, setFiles }) => {
                     </span>
                     <button
                         className="px-3 text-3xl bg-gray-800 bg-opacity-25 hover:bg-opacity-50 focus:outline-none focus-visible:shadow-outline rounded-r"
+                        type="button"
                         onClick={() =>
                             setFiles(files.filter((_, i) => i !== index))
                         }
@@ -67,6 +68,7 @@ const FormFiles = ({ id, name, label, multiple, accept, files, setFiles }) => {
                     </span>
                     <button
                         className="px-3 text-3xl bg-gray-800 bg-opacity-25 hover:bg-opacity-50 focus:outline-none focus-visible:shadow-outline rounded-r"
+                        type="button"
                         onClick={() => fileInput.current.click()}
                     >
                         +
