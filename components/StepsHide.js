@@ -2,11 +2,16 @@ import React, { useState } from "react";
 import FlowStep from "./FlowStep";
 import FormFiles from "./FormFiles";
 import FormRange from "./FormRange";
+import FormPassword from "./FormPassword";
 
 const StepsHide = () => {
     const [image, setImage] = useState([]);
     const [files, setFiles] = useState([]);
     const [compression, setCompression] = useState(9);
+    const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+
+    const validPassword = password === confirmPassword;
 
     return (
         <>
@@ -41,6 +46,19 @@ const StepsHide = () => {
                     step={1}
                     value={compression}
                     onChange={setCompression}
+                />
+            </FlowStep>
+            <FlowStep>
+                <p className="mb-8">
+                    Choose and confirm password{" "}
+                    <span className="text-gray-500">(optional)</span>
+                </p>
+                <FormPassword
+                    value={password}
+                    confirm={confirmPassword}
+                    onChange={setPassword}
+                    onConfirm={setConfirmPassword}
+                    valid={validPassword}
                 />
             </FlowStep>
         </>
