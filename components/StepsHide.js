@@ -3,6 +3,7 @@ import FlowStep from "./FlowStep";
 import FormFiles from "./FormFiles";
 import FormRange from "./FormRange";
 import FormPassword from "./FormPassword";
+import ProgressButton from "./ProgressButton";
 
 const StepsHide = () => {
     const [image, setImage] = useState([]);
@@ -61,6 +62,9 @@ const StepsHide = () => {
                     valid={validPassword}
                 />
             </FlowStep>
+            <ProgressButton progress={0}>
+                Hide files inside image
+            </ProgressButton>
         </>
     );
 };
