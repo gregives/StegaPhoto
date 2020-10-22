@@ -12,10 +12,12 @@ const StepsHide = () => {
     const [compression, setCompression] = useState(9);
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [hiding, setHiding] = useState(false);
     const [progress, setProgress] = useState(0);
     const [result, setResult] = useState(null);
 
     const hideFiles = () => {
+        setHiding(true);
         const worker = new HideWorker();
 
         worker.onmessage = ({ data: { progress, result } }) => {
@@ -71,8 +73,16 @@ const StepsHide = () => {
                     valid={password === confirmPassword}
                 />
             </FlowStep>
-            <ProgressButton onClick={hideFiles} progress={progress}>
-                Hide files inside image
+            <ProgressButton
+                onClick={hideFiles}
+                progress={progress}
+                download={result && URL.createObjectURL(result)}
+            >
+                {result
+                    ? "Download image"
+                    : hiding
+                    ? "Hiding files..."
+                    : "Hide files inside image"}
             </ProgressButton>
         </>
     );
