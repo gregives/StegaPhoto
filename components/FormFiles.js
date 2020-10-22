@@ -1,8 +1,41 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import pretty from "pretty-bytes";
 
-const FormFiles = ({ id, name, label, multiple, accept, files, setFiles }) => {
+const FormFiles = ({ type = "file", multiple, accept, files, setFiles }) => {
+    const [error, setError] = useState(false);
+    const [loading, setLoading] = useState(false);
     const fileInput = useRef(null);
+
+    const readFile = (file) => {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                resolve({
+                    contents: reader.result,
+                    name: file.name,
+                    date: new Date(file.lastModified),
+                    size: file.size,
+                    type: file.type,
+                });
+            };
+            reader.onerror = reject;
+            reader.readAsArrayBuffer(file);
+        });
+    };
+
+    const loadFiles = async (event) => {
+        setLoading(true);
+        try {
+            const newFiles = await Promise.all(
+                [...event.target.files].map(readFile)
+            );
+            setError(false);
+            setFiles([...files, ...newFiles].reduce(uniqueFiles, []));
+        } catch {
+            setError(true);
+        }
+        setLoading(false);
+    };
 
     const uniqueFiles = (uniqueFiles, file) => {
         const exists = uniqueFiles.find(
@@ -47,24 +80,21 @@ const FormFiles = ({ id, name, label, multiple, accept, files, setFiles }) => {
                 >
                     <input
                         type="file"
-                        accept={accept || undefined}
-                        id={id}
-                        name={name}
-                        onChange={(event) =>
-                            setFiles(
-                                [...files, ...event.target.files].reduce(
-                                    uniqueFiles,
-                                    []
-                                )
-                            )
-                        }
+                        accept={accept}
+                        onChange={loadFiles}
                         multiple={multiple}
                         hidden
                         ref={fileInput}
                     />
                     <span className="flex-grow py-2 px-4 truncate">
-                        {label || "Add file"}
+                        {error
+                            ? "Error loading "
+                            : loading
+                            ? "Loading "
+                            : "Add "}
+                        {type}
                         {multiple && "s"}
+                        {loading && "..."}
                     </span>
                     <button
                         className="px-3 text-3xl bg-gray-800 bg-opacity-25 hover:bg-opacity-50 focus:outline-none focus-visible:shadow-outline rounded-r"
