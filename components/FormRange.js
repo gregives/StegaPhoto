@@ -8,7 +8,7 @@ const FormRange = ({ min, max, step, value, onChange }) => {
     return (
         <div>
             <input
-                className="block rounded-full appearance-none focus:outline-none focus-visible:shadow-outline bg-gray-900 bg-opacity-25 shadow-inner w-full -mx-4 px-4 h-4 box-content"
+                className="block rounded-full appearance-none cursor-pointer focus:outline-none focus-visible:shadow-outline bg-gray-900 bg-opacity-25 shadow-inner w-full -mx-4 px-4 h-4 box-content"
                 type="range"
                 min={min}
                 max={max}
@@ -22,8 +22,8 @@ const FormRange = ({ min, max, step, value, onChange }) => {
                         key={number}
                         className={
                             number === value
-                                ? "text-gray-100 text-center w-5"
-                                : "text-gray-500 text-center w-5"
+                                ? "text-gray-100 cursor-pointer text-center w-5"
+                                : "text-gray-500 cursor-pointer text-center w-5"
                         }
                         onClick={() => onChange(number)}
                     >
