@@ -1,7 +1,7 @@
 const ProgressButton = ({ onClick, progress, download, children }) => {
     return download ? (
         <a
-            className="relative text-center bg-teal-700 hover:bg-teal-600 transition duration-300 transform hover:scale-105 text-2xl md:text-3xl lg:text-4xl p-6 md:p-8 mx-auto w-full max-w-screen-sm rounded-full shadow-lg focus:outline-none focus-visible:shadow-outline"
+            className="block relative text-center bg-teal-700 hover:bg-teal-600 transition duration-300 transform hover:scale-105 text-2xl md:text-3xl lg:text-4xl p-6 md:p-8 mx-auto w-full max-w-screen-sm rounded-full shadow-lg focus:outline-none focus-visible:shadow-outline"
             href={download}
             download
         >
@@ -10,7 +10,7 @@ const ProgressButton = ({ onClick, progress, download, children }) => {
         </a>
     ) : (
         <button
-            className="relative bg-blue-700 hover:bg-blue-600 transition duration-300 transform hover:scale-105 text-2xl md:text-3xl lg:text-4xl p-6 md:p-8 mx-auto w-full max-w-screen-sm rounded-full shadow-lg focus:outline-none focus-visible:shadow-outline"
+            className="block relative bg-blue-700 hover:bg-blue-600 transition duration-300 transform hover:scale-105 text-2xl md:text-3xl lg:text-4xl p-6 md:p-8 mx-auto w-full max-w-screen-sm rounded-full shadow-lg focus:outline-none focus-visible:shadow-outline"
             type="button"
             onClick={onClick}
         >
