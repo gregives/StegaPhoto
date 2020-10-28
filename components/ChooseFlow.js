@@ -11,7 +11,7 @@ const ChooseFlow = ({ onChoice }) => (
         />
         <FormRadio
             name="chooseFlow"
-            value="show"
+            value="find"
             label="retrieve files from an image"
             onChange={onChoice}
         />

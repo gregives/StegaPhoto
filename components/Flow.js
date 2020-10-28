@@ -2,18 +2,18 @@ import React, { useState } from "react";
 import ChooseFlow from "./ChooseFlow";
 import FlowStep from "./FlowStep";
 import FlowStepList from "./FlowStepList";
+import StepsFind from "./StepsFind";
 import StepsHide from "./StepsHide";
-import StepsShow from "./StepsShow";
 
 const Flow = () => {
     const [flow, setFlow] = useState(null);
 
     const chosenFlowSteps = (() => {
         switch (flow) {
+            case "find":
+                return <StepsFind />;
             case "hide":
                 return <StepsHide />;
-            case "show":
-                return <StepsShow />;
             default:
                 return <></>;
         }
