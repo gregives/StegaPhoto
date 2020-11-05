@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Style thumb of range input */
+input[type="range"]::-webkit-slider-thumb {
+    appearance: none;
+    background-color: #cbd5e0;
+    border-radius: 0.25rem 0.25rem 50% 50% / 0.25rem 0.25rem 50% 50%;
+    height: 2rem;
+    width: 0.75rem;
+}
