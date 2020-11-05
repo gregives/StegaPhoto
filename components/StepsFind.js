@@ -3,6 +3,7 @@ import FlowStep from "./FlowStep";
 import FormFiles from "./FormFiles";
 import FormPassword from "./FormPassword";
 import ProgressButton from "./ProgressButton";
+import FindWorker from "../workers/Find.worker";
 
 const StepsShow = () => {
     const [image, setImage] = useState([]);
@@ -10,6 +11,21 @@ const StepsShow = () => {
     const [finding, setFinding] = useState(false);
     const [progress, setProgress] = useState(0);
     const [result, setResult] = useState(null);
+
+    const findFiles = () => {
+        setFinding(true);
+        const worker = new FindWorker();
+
+        worker.onmessage = ({ data: { progress, result } }) => {
+            setProgress(progress);
+            setResult(result);
+        };
+
+        worker.postMessage({
+            image,
+            password,
+        });
+    };
 
     return (
         <>
@@ -33,6 +49,7 @@ const StepsShow = () => {
             </FlowStep>
             <FlowStep>
                 <ProgressButton
+                    onClick={findFiles}
                     progress={progress}
                     download={result && URL.createObjectURL(result)}
                 >
