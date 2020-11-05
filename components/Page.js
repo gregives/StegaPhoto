@@ -25,12 +25,6 @@ const Page = ({ children }) => (
                 media="print"
                 onLoad="this.media='all'"
             />
-            <noscript>
-                <link
-                    rel="stylesheet"
-                    href="https://fonts.googleapis.com/css2?family=Inter&display=swap"
-                />
-            </noscript>
             <meta
                 name="description"
                 content="Hide files inside images easily using StegaPhoto, using in-browser steganography techniques."
