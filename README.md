@@ -106,4 +106,4 @@ I welcome all contributions, big or small. Feel free to create an issue or submi
 
 ## 4. License
 
-This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE.md) file for details.
