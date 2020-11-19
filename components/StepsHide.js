@@ -4,7 +4,7 @@ import FormFiles from "./FormFiles";
 import FormRange from "./FormRange";
 import FormPassword from "./FormPassword";
 import ProgressButton from "./ProgressButton";
-import HideWorker from "../workers/hide.worker";
+import HideWorker from "../workers/Hide.worker";
 
 const StepsHide = () => {
     const [image, setImage] = useState([]);
