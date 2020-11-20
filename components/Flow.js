@@ -22,7 +22,7 @@ const Flow = () => {
     return (
         <main className="relative">
             <div className="absolute pt-32 w-full bg-gradient-to-b from-blue-900 to-gray-800 opacity-50"></div>
-            <div className="relative py-32 container mx-auto px-8">
+            <div className="relative py-32 container xl:max-w-screen-xl mx-auto px-8">
                 <form>
                     <FlowStepList>
                         <FlowStep>

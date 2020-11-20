@@ -59,11 +59,11 @@ const FormFiles = ({ type = "file", multiple, accept, files, setFiles }) => {
                     <span className="flex-grow py-2 px-4 truncate">
                         {file.name}
                     </span>
-                    <span className="flex-shrink whitespace-no-wrap py-2 px-4 text-gray-500">
+                    <span className="flex-shrink whitespace-nowrap py-2 px-4 text-gray-500">
                         {pretty(file.size)}
                     </span>
                     <button
-                        className="px-3 text-3xl bg-gray-800 bg-opacity-25 hover:bg-opacity-50 focus:outline-none focus-visible:shadow-outline rounded-r"
+                        className="self-stretch px-3 text-3xl bg-gray-800 bg-opacity-25 hover:bg-opacity-50 focus:outline-none focus-visible:ring ring-blue-500 ring-opacity-50 rounded-r"
                         type="button"
                         onClick={() =>
                             setFiles(files.filter((_, i) => i !== index))
@@ -97,7 +97,7 @@ const FormFiles = ({ type = "file", multiple, accept, files, setFiles }) => {
                         {loading && "..."}
                     </span>
                     <button
-                        className="px-3 text-3xl bg-gray-800 bg-opacity-25 hover:bg-opacity-50 focus:outline-none focus-visible:shadow-outline rounded-r"
+                        className="self-stretch px-3 text-3xl bg-gray-800 bg-opacity-25 hover:bg-opacity-50 focus:outline-none focus-visible:ring ring-blue-500 ring-opacity-50 rounded-r"
                         type="button"
                         onClick={() => fileInput.current.click()}
                     >

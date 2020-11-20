@@ -4,7 +4,7 @@ const FormRadio = ({ name, label, value, onChange }) => (
             type="radio"
             name={name}
             value={value}
-            className="appearance-none cursor-pointer focus:outline-none focus-visible:shadow-outline rounded-full border-2 border-current p-3 checked:bg-blue-500 mr-4"
+            className="appearance-none cursor-pointer focus:outline-none focus-visible:ring ring-blue-500 ring-opacity-50 rounded-full border-2 border-current p-3 checked:bg-blue-500 mr-4"
             onChange={(event) => onChange(event.target.value)}
         />
         {label}
