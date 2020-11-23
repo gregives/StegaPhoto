@@ -63,7 +63,7 @@ const StepsHide = () => {
             <FlowStep>
                 <p className="mb-8">
                     Choose and confirm password{" "}
-                    <span className="text-gray-500">(optional)</span>
+                    <span className="text-gray-400">(optional)</span>
                 </p>
                 <FormPassword
                     value={password}

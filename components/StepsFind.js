@@ -43,7 +43,7 @@ const StepsShow = () => {
             <FlowStep>
                 <p className="mb-8">
                     Enter the password used to hide the files{" "}
-                    <span className="text-gray-500">(may be blank)</span>
+                    <span className="text-gray-400">(may be blank)</span>
                 </p>
                 <FormPassword value={password} onChange={setPassword} />
             </FlowStep>
