@@ -1,5 +1,12 @@
 import Head from "next/head";
 
+const NOSCRIPT = `
+    form {
+        opacity: 0.5;
+        pointer-events: none;
+    }
+`;
+
 const Page = ({ children }) => (
     <div className="min-h-screen flex flex-col justify-between bg-gray-800 text-gray-100 text-xl lg:text-2xl">
         <Head>
@@ -47,6 +54,9 @@ const Page = ({ children }) => (
                 href="/favicon-16x16.png"
             />
             <link rel="manifest" href="/site.webmanifest" />
+            <noscript>
+                <style>{NOSCRIPT}</style>
+            </noscript>
         </Head>
         {children}
     </div>
