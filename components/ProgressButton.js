@@ -10,7 +10,7 @@ const ProgressButton = ({ onClick, progress, download, children }) => {
         </a>
     ) : (
         <button
-            className="block relative bg-blue-700 hover:bg-blue-600 focus:bg-blue-600 transition duration-300 transform hover:scale-105 focus:scale-105 text-2xl md:text-3xl lg:text-4xl p-6 md:p-8 mx-auto w-full max-w-screen-sm rounded-full shadow-lg focus:outline-none"
+            className="block relative bg-blue-700 hover:bg-blue-600 focus:bg-blue-600 transition-transform duration-300 transform hover:scale-105 focus:scale-105 text-2xl md:text-3xl lg:text-4xl p-6 md:p-8 mx-auto w-full max-w-screen-sm rounded-full shadow-lg focus:outline-none"
             type="button"
             onClick={onClick}
         >
