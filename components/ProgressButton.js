@@ -14,13 +14,13 @@ const ProgressButton = ({ onClick, progress, download, children }) => {
             type="button"
             onClick={onClick}
         >
-            <span className="absolute inset-0 rounded-full bg-blue-400 animate-pulse bg-opacity-25 overflow-hidden">
+            <span className="absolute inset-0 rounded-full bg-blue-400 hover:animate-pulse bg-opacity-25 overflow-hidden">
                 <span
                     className="absolute inset-0 origin-left transition-transform ease-linear duration-700 bg-blue-900 bg-opacity-50"
                     style={{ transform: `scaleX(${progress / 100})` }}
                 ></span>
             </span>
-            <span className="relative">{children}</span>
+            {children}
         </button>
     );
 };
