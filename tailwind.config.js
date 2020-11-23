@@ -20,6 +20,7 @@ module.exports = {
     },
     variants: {
         backgroundColor: ({ after }) => after(["checked", "active"]),
+        borderColor: ({ after }) => after(["checked"]),
         ringWidth: ({ after }) => after(["focus-visible"], "focus"),
         textDecoration: ({ after }) => after(["focus-visible"], "focus"),
     },
