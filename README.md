@@ -1,3 +1,5 @@
+![stegaphoto vercel app_](https://user-images.githubusercontent.com/23280125/116726930-d5830e80-a9db-11eb-8117-a8264e1743fe.png)
+
 # StegaPhoto
 
 Originally built in 2017, StegaPhoto is an easy-to-use website to hide files within images, a form of _steganography_. I have rewritten StegaPhoto using React, SubtleCrypto, Web Workers, JSZip and Tailwind. **Note that StegaPhoto does not use a server &mdash; all the work is done in your browser**. The project is outlined below.
