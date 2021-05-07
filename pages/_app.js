@@ -1,4 +1,4 @@
-import "../styles/tailwind.css";
+import "../styles/global.css";
 import "focus-visible";
 
 const StegaPhoto = ({ Component, pageProps }) => <Component {...pageProps} />;
