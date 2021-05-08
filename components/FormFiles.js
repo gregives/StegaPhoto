@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import pretty from "pretty-bytes";
 
 const FormFiles = ({ type = "file", multiple, accept, files, setFiles }) => {

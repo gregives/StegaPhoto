@@ -1,7 +1,7 @@
 import FormRadio from "./FormRadio";
 
 const ChooseFlow = ({ onChoice }) => (
-    <div className="grid gap-4">
+    <fieldset form="form" className="grid gap-4 mb-32">
         <p className="mb-4">I would like to</p>
         <FormRadio
             name="chooseFlow"
@@ -15,7 +15,7 @@ const ChooseFlow = ({ onChoice }) => (
             label="retrieve files from an image"
             onChange={onChoice}
         />
-    </div>
+    </fieldset>
 );
 
 export default ChooseFlow;

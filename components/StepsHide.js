@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import FlowStep from "./FlowStep";
+import { useState } from "react";
 import FormFiles from "./FormFiles";
 import FormRange from "./FormRange";
 import FormPassword from "./FormPassword";
@@ -34,8 +33,8 @@ const StepsHide = () => {
     };
 
     return (
-        <>
-            <FlowStep>
+        <form id="form" className="grid gap-32">
+            <div>
                 <p className="mb-8">
                     Add the image you want to hide the files inside
                 </p>
@@ -45,12 +44,12 @@ const StepsHide = () => {
                     files={image}
                     setFiles={setImage}
                 />
-            </FlowStep>
-            <FlowStep>
+            </div>
+            <div>
                 <p className="mb-8">Add the files you would like to hide</p>
                 <FormFiles multiple files={files} setFiles={setFiles} />
-            </FlowStep>
-            <FlowStep>
+            </div>
+            <div>
                 <p className="mb-8">Choose the compression level</p>
                 <FormRange
                     min={0}
@@ -59,8 +58,8 @@ const StepsHide = () => {
                     value={compression}
                     onChange={setCompression}
                 />
-            </FlowStep>
-            <FlowStep>
+            </div>
+            <div>
                 <p className="mb-8">
                     Choose and confirm password{" "}
                     <span className="text-gray-400">(optional)</span>
@@ -72,8 +71,8 @@ const StepsHide = () => {
                     onConfirm={setConfirmPassword}
                     valid={password === confirmPassword}
                 />
-            </FlowStep>
-            <FlowStep>
+            </div>
+            <div>
                 <ProgressButton
                     onClick={hideFiles}
                     progress={progress}
@@ -85,8 +84,8 @@ const StepsHide = () => {
                         ? "Hiding files..."
                         : "Hide files inside image"}
                 </ProgressButton>
-            </FlowStep>
-        </>
+            </div>
+        </form>
     );
 };
 
